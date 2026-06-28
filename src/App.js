@@ -1,19 +1,21 @@
-
-
-
-
-
 import "./App.css";
-import MyButton from "./clickmebutton";
-import { Welcome } from "./welcom";
-import { Profile } from "./profile";
+import Dashboard from "./pages/Dashboard";
+import Productscards from "./pages/productscards";
+import StateExample from "./pages/stateexample";
+import SignInForm from "./pages/SignInForm";
 function App() {
   return (
     <div className="App">
-      <Welcome />
-   <Profile />
-      <MyButton />
-      
+      <h1>My React App</h1>
+
+      <Dashboard />
+
+      <StateExample />
+
+      <Productscards />
+
+      {/* 👇 SIGN IN FORM HERE */}
+      <SignInForm />
     </div>
   );
 }

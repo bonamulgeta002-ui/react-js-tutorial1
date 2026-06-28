@@ -1,20 +1,14 @@
-
-
-
-
-
 import "./App.css";
-import MyButton from "./clickmebutton";
-import { Welcome } from "./welcom";
-import { Profile } from "./profile";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+
 function App() {
   return (
-    <div className="App">
-      <Welcome />
-   <Profile />
-      <MyButton />
-      
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
