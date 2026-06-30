@@ -27,7 +27,7 @@ function App() {
 
       <input
         type="number"
-        placeholder="enter number "
+        placeholder="Number 1"
         value={num1}
         onChange={(e) => setNum1(e.target.value)}
       />
@@ -36,7 +36,7 @@ function App() {
 
       <input
         type="number"
-        placeholder="enter number"
+        placeholder="Number 2"
         value={num2}
         onChange={(e) => setNum2(e.target.value)}
       />
