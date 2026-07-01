@@ -1,40 +1,54 @@
 import React, { useState } from "react";
 
 function App() {
-  const [city, setCity] = useState("");
-  const [weather, setWeather] = useState(null);
+  const [num1, setNum1] = useState("");
+  const [num2, setNum2] = useState("");
+  const [result, setResult] = useState(0);
 
-  const API_KEY = "32d930aa05be2be9c0ea008ff493681f";
+  const add = () => {
+    setResult(Number(num1) + Number(num2));
+  };
 
-  const getWeather = async () => {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    );
+  const subtract = () => {
+    setResult(Number(num1) - Number(num2));
+  };
 
-    const data = await res.json();
-    setWeather(data);
+  const multiply = () => {
+    setResult(Number(num1) * Number(num2));
+  };
+
+  const divide = () => {
+    setResult(Number(num1) / Number(num2));
   };
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Weather App</h1>
+      <h1>Calculator App</h1>
 
       <input
-        type="text"
-        placeholder="City Name"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
+        type="number"
+        placeholder="Number 1"
+        value={num1}
+        onChange={(e) => setNum1(e.target.value)}
       />
 
-      <button onClick={getWeather}>Search</button>
+      <br /><br />
 
-      {weather && weather.main && (
-        <div>
-          <h2>{weather.name}</h2>
-          <p>Temperature: {weather.main.temp} °C</p>
-          <p>Weather: {weather.weather[0].main}</p>
-        </div>
-      )}
+      <input
+        type="number"
+        placeholder="Number 2"
+        value={num2}
+        onChange={(e) => setNum2(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={add}>+</button>
+      <button onClick={subtract}>-</button>
+      <button onClick={multiply}>*</button>
+      <button onClick={divide}>/</button>
+
+      <h2>Result: {result}</h2>
     </div>
   );
 }
