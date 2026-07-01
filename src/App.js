@@ -1,66 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import "./TodoList.css";
 
-function ExpenseTracker() {
-  const [text, setText] = useState("");
-  const [amount, setAmount] = useState("");
-  const [transactions, setTransactions] = useState([]);
+function TodoList() {
+  const [task, setTask] = useState("");
+  const [todos, setTodos] = useState([]);
 
-  const addTransaction = () => {
-    if (!text || !amount) return;
+  const addTodo = () => {
+    if (task.trim() === "") return;
 
-    const newTransaction = {
-      id: Date.now(),
-      text,
-      amount: Number(amount),
-    };
-
-    setTransactions([...transactions, newTransaction]);
-    setText("");
-    setAmount("");
+    setTodos([...todos, task]);
+    setTask("");
   };
 
-  const deleteTransaction = (id) => {
-    setTransactions(
-      transactions.filter((item) => item.id !== id)
-    );
+  const deleteTodo = (index) => {
+    const newTodos = todos.filter((todo, i) => i !== index);
+    setTodos(newTodos);
   };
-
-  const balance = transactions.reduce(
-    (total, item) => total + item.amount,
-    0
-  );
 
   return (
-    <div className="expense-app">
-      <h1>Expense Tracker</h1>
+    <div className="todo-container">
+      <h1>Todo List</h1>
 
-      <h2>Balance: ${balance}</h2>
+      <div className="input-section">
+        <input
+          type="text"
+          placeholder="Enter a task..."
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+        />
 
-      <input
-        type="text"
-        placeholder="Description"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-
-      <input
-        type="number"
-        placeholder="Amount (+ income, - expense)"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-
-      <button onClick={addTransaction}>
-        Add Transaction
-      </button>
+        <button onClick={addTodo}>Add</button>
+      </div>
 
       <ul>
-        {transactions.map((item) => (
-          <li key={item.id}>
-            {item.text} (${item.amount})
-
+        {todos.map((todo, index) => (
+          <li key={index}>
+            {todo}
             <button
-              onClick={() => deleteTransaction(item.id)}
+              className="delete-btn"
+              onClick={() => deleteTodo(index)}
             >
               Delete
             </button>
@@ -71,4 +49,4 @@ function ExpenseTracker() {
   );
 }
 
-export default ExpenseTracker;
+export default TodoList;
