@@ -1,56 +1,74 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-function App() {
-  const [num1, setNum1] = useState("");
-  const [num2, setNum2] = useState("");
-  const [result, setResult] = useState(0);
+function ExpenseTracker() {
+  const [text, setText] = useState("");
+  const [amount, setAmount] = useState("");
+  const [transactions, setTransactions] = useState([]);
 
-  const add = () => {
-    setResult(Number(num1) + Number(num2));
+  const addTransaction = () => {
+    if (!text || !amount) return;
+
+    const newTransaction = {
+      id: Date.now(),
+      text,
+      amount: Number(amount),
+    };
+
+    setTransactions([...transactions, newTransaction]);
+    setText("");
+    setAmount("");
   };
 
-  const subtract = () => {
-    setResult(Number(num1) - Number(num2));
+  const deleteTransaction = (id) => {
+    setTransactions(
+      transactions.filter((item) => item.id !== id)
+    );
   };
 
-  const multiply = () => {
-    setResult(Number(num1) * Number(num2));
-  };
-
-  const divide = () => {
-    setResult(Number(num1) / Number(num2));
-  };
+  const balance = transactions.reduce(
+    (total, item) => total + item.amount,
+    0
+  );
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Calculator App</h1>
+    <div className="expense-app">
+      <h1>Expense Tracker</h1>
+
+      <h2>Balance: ${balance}</h2>
+
+      <input
+        type="text"
+        placeholder="Description"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
 
       <input
         type="number"
-        placeholder="Number 1"
-        value={num1}
-        onChange={(e) => setNum1(e.target.value)}
+        placeholder="Amount (+ income, - expense)"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
       />
 
-      <br /><br />
+      <button onClick={addTransaction}>
+        Add Transaction
+      </button>
 
-      <input
-        type="number"
-        placeholder="Number 2"
-        value={num2}
-        onChange={(e) => setNum2(e.target.value)}
-      />
+      <ul>
+        {transactions.map((item) => (
+          <li key={item.id}>
+            {item.text} (${item.amount})
 
-      <br /><br />
-
-      <button onClick={add}>+</button>
-      <button onClick={subtract}>-</button>
-      <button onClick={multiply}>*</button>
-      <button onClick={divide}>/</button>
-
-      <h2>Result: {result}</h2>
+            <button
+              onClick={() => deleteTransaction(item.id)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default App;
+export default ExpenseTracker;
